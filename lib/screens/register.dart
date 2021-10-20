@@ -1,64 +1,33 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
+import 'package:flutter_mysql/main.dart';
 import 'package:flutter_mysql/screens/home.dart';
-import 'package:flutter_mysql/screens/register.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class Register extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  _RegisterState createState() => _RegisterState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-  
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _RegisterState extends State<Register> {
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
 
-  Future login() async {
-    var url = Uri.parse("http://192.168.232.45/flutter-mysql/user.php");
+  Future register() async {
+    var url = Uri.parse("http://192.168.232.45/flutter-mysql/register.php");
     var response = await http.post(url, body: {
       "username": user.text,
       "password": pass.text,
     });
     var data = json.decode(response.body);
-    if (data == "Success") {
-      Fluttertoast.showToast(msg: 'Login Successful');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+    if (data == "Error") {
+      Fluttertoast.showToast(msg: 'User already exist!');
     } else {
-      Fluttertoast.showToast(msg: 'Username and password invalid');
+      Fluttertoast.showToast(msg: 'Registration Successful');
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(),),);
     }
   }
 
@@ -79,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -112,19 +81,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Expanded(
                     child: MaterialButton(
-                      child: Text('Login',
+                      child: Text('Register',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               )),
                       onPressed: () {
-                        login();
+                        register();
                       },
                     ),
                   ),
                   Expanded(
                     child: MaterialButton(
-                      child: Text('Register',
+                      child: Text('Login',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -133,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Register(),
+                            builder: (context) => MyHomePage(),
                           ),
                         );
                       },
