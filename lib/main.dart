@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController pass = TextEditingController();
 
   Future login() async {
-    var url = Uri.parse("http://192.168.232.45/flutter-mysql/user.php");
+    var url = Uri.parse("http://192.168.64.45/flutter-mysql/login.php");
     var response = await http.post(url, body: {
       "username": user.text,
       "password": pass.text,

@@ -18,3 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 ## Resources
 - Tutorial(YT): https://www.youtube.com/watch?v=-FP3e1UvPfM
 - Github Source Code: https://github.dev/shawondeveloper/php-mysql-flutter-login-register/tree/master/php_mysql_login_register
+- Teetotum YT Channel: https://www.youtube.com/watch?v=OpMyn7SdAWo
